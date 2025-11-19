@@ -29,28 +29,134 @@
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
-        .good-to-go {
-            background-color: #f0fdf4;
-            border-color: #86efac;
-            color: #166534;
-        }
-        .no-go {
-            background-color: #fef2f2;
-            border-color: #fca5a5;
-            color: #b91c1c;
-        }
-        .tool-highlight {
-            transition: all 0.3s ease;
-        }
-        .tool-highlight:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .hidden {
+        .tab-content {
             display: none;
         }
-        .active {
-            display: block;
+
+            .tab-content.active {
+                display: block;
+                animation: fadeIn 0.5s ease-in-out;
+            }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .risk-low {
+            background-color: #d1fae5;
+            border-left: 4px solid #10b981;
+        }
+
+        .risk-medium {
+            background-color: #fef3c7;
+            border-left: 4px solid #f59e0b;
+        }
+
+        .risk-high {
+            background-color: #fee2e2;
+            border-left: 4px solid #ef4444;
+        }
+
+        .complexity-low {
+            background-color: #d1fae5;
+        }
+
+        .complexity-medium {
+            background-color: #fef3c7;
+        }
+
+        .complexity-high {
+            background-color: #fee2e2;
+        }
+
+        .border-red-500 {
+            border-color: #ef4444 !important;
+            box-shadow: 0 0 0 1px #ef4444;
+        }
+
+        .fish-entry {
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background-color: #f9fafb;
+            position: relative;
+        }
+
+        .remove-fish-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background-color: #fee2e2;
+            color: #ef4444;
+            border: none;
+            border-radius: 50%;
+            width: 1.5rem;
+            height: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.75rem;
+        }
+
+        .good-to-go {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+
+        .no-go {
+            background-color: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .tool-highlight {
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+            border-color: #3b82f6;
+        }
+
+        .bha-assembly-container {
+            min-width: 300px;
+            max-width: 350px;
+        }
+
+        .smooth-transition {
+            transition: all 0.3s ease-in-out;
+        }
+        
+        .guide-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background-color: #f8fafc;
+            border-radius: 0.5rem;
+            border-left: 4px solid #3b82f6;
+        }
+        
+        .tool-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        
+        .tool-table th, .tool-table td {
+            border: 1px solid #e5e7eb;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        .tool-table th {
+            background-color: #3b82f6;
+            color: white;
+        }
+        
+        .tool-table tr:nth-child(even) {
+            background-color: #f9fafb;
         }
     </style>
 </head>
@@ -58,46 +164,39 @@
     <!-- Login Page Content (initially shown) -->
     <div id="loginPage" class="min-h-screen flex items-center justify-center">
         <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
-            <h1 class="text-3xl font-bold text-center text-navy-700 mb-8 flex items-center justify-center gap-2">
+            <h1 class="text-3xl font-bold text-center text-navy- mb-8 flex items-center justify-center gap-2">
                 <div class="relative w-16 h-16 flex items-center justify-center">
                     <div class="absolute inset-0 bg-blue-500 rounded-full shadow-lg"></div>
                     <div class="fas fa-fish text-white text-3xl relative z-10"></div>
                     <div class="absolute inset-0 border-4 border-blue-600 rounded-full opacity-30"></div>
                 </div>
-                F.O.C.U.S
             </h1>
-            
+
             <form id="loginForm" class="space-y-6">
                 <div>
                     <label for="username" class="block text-gray-700 mb-2">Username</label>
-                    <input 
-                        type="text" 
-                        id="username" 
-                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-navy-500"
-                        placeholder="Enter username"
-                        required
-                    >
+                    <input type="text"
+                           id="username"
+                           class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-navy-500"
+                           placeholder="Enter username"
+                           required>
                 </div>
-                
+
                 <div>
                     <label for="password" class="block text-gray-700 mb-2">Password</label>
-                    <input 
-                        type="password" 
-                        id="password" 
-                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-navy-500"
-                        placeholder="Enter password"
-                        required
-                    >
+                    <input type="password"
+                           id="password"
+                           class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-navy-500"
+                           placeholder="Enter password"
+                           required>
                 </div>
-                
+
                 <div id="loginError" class="text-red-500 text-sm hidden">
                     Invalid username or password
                 </div>
-                
-                <button 
-                    type="submit"
-                    class="w-full bg-navy-700 hover:bg-navy-800 text-white font-bold py-3 px-4 rounded-lg shadow-md transition-all duration-200 hover:shadow-lg"
-                >
+
+                <button type="submit"
+                        class="w-full bg-navy-700 hover:bg-navy-800 text-white font-bold py-3 px-4 rounded-lg shadow-md transition-all duration-200 hover:shadow-lg">
                     Sign In
                 </button>
             </form>
@@ -105,7 +204,7 @@
     </div>
 
     <!-- Application Content (hidden initially) -->
-    <div id="appContent" class="hidden container mx-auto px-2 py-4 max-w-4xl">
+    <div id="appContent" class="hidden container mx-auto px-2 py-4 max-w-6xl">
         <div class="bg-white rounded-lg shadow-lg overflow-hidden text-sm">
             <!-- Header -->
             <div class="bg-navy-900 text-white p-4">
@@ -120,11 +219,9 @@
                             <i class="fas fa-fish text-white text-3xl relative z-10"></i>
                             <div class="absolute inset-0 border-4 border-blue-600 rounded-full opacity-30"></div>
                         </div>
-                        <button 
-                            id="logoutBtn" 
-                            class="text-white hover:text-gray-200 flex items-center gap-2"
-                            title="Logout"
-                        >
+                        <button id="logoutBtn"
+                                class="text-white hover:text-gray-200 flex items-center gap-2"
+                                title="Logout">
                             <i class="fas fa-sign-out-alt"></i>
                         </button>
                     </div>
@@ -137,6 +234,10 @@
                 <div class="flex border-b border-navy-200 mb-4 overflow-x-auto">
                     <button class="tab-btn py-2 px-4 font-medium text-navy-900 border-b-2 border-navy-900" data-tab="calculator">Fill in Data</button>
                     <button class="tab-btn py-2 px-4 font-medium text-gray-500" data-tab="economic">Fishing Operation Summary</button>
+                    <button class="tab-btn py-2 px-4 font-medium text-gray-500" data-tab="selection-guide">Fishing Selection Guide</button>
+                    <button class="tab-btn py-2 px-4 font-medium text-gray-500" data-tab="bha-design">Fishing BHA Design</button>
+                    <button class="tab-btn py-2 px-4 font-medium text-gray-500" data-tab="fish-type-bha">BHA Based on Fish Type</button>
+                    <button class="tab-btn py-2 px-4 font-medium text-gray-500" data-tab="operation-guidance">Fishing Operation Guidance</button>
                 </div>
 
                 <!-- Calculator Tab -->
@@ -150,43 +251,80 @@
                                 <label class="block text-gray-700 mb-2">Well Name</label>
                                 <input type="text" id="wellName" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter well name">
                             </div>
+
                             <div class="mb-4">
-                                <label class="block text-gray-700 mb-2">Current Oil Production (BOPD)</label>
-                                <input
-                                  type="number"
-                                  id="oilProduction"
-                                  class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                  placeholder="1000"
-                                />
-                            </div>
-                            <div class="mb-4">
-                                <label class="block text-gray-700 mb-2">Field Name</label>
-                                <select id="fieldName" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                    <option value="MINAS" data-complexity-prob="0.096" data-complexity-success="0.9215" data-decline-rate="0.65" data-lifting-cost="27" data-rig-cost="7600">MINAS</option>
-                                    <option value="PETKO" data-complexity-prob="0.0525" data-complexity-success="1" data-decline-rate="0.30" data-lifting-cost="27" data-rig-cost="8200">PETKO</option>
-                                    <option value="LIBO" data-complexity-prob="0.0525" data-complexity-success="0.9215" data-decline-rate="0.30" data-lifting-cost="27" data-rig-cost="7600">LIBO</option>
-                                    <option value="BALAM" data-complexity-prob="0.0525" data-complexity-success="0.9215" data-decline-rate="0.35" data-lifting-cost="27" data-rig-cost="7600">BALAM</option>
-                                    <option value="BANGKO" data-complexity-prob="0.0525" data-complexity-success="0.9215" data-decline-rate="0.30" data-lifting-cost="27" data-rig-cost="7600">BANGKO</option>
-                                    <option value="BEKASAP" data-complexity-prob="0.0525" data-complexity-success="0.9215" data-decline-rate="0.30" data-lifting-cost="27" data-rig-cost="7600">BEKASAP</option>
-                                    <option value="DSF" data-complexity-prob="0.135" data-complexity-success="0.855" data-decline-rate="0.40" data-lifting-cost="42" data-rig-cost="7600">DSF</option>
-                                </select>
-                            </div>
-                            <div class="mb-4">
-                                <label class="block text-gray-700 mb-2">Is this First Entry?</label>
-                                <select id="firstEntry" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <label class="block text-gray-700 mb-2">Is this First Entry? <span class="text-red-500">*</span></label>
+                                <select id="firstEntry" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                                    <option value="" selected disabled>Choose an Option</option>
                                     <option value="yes">YES</option>
                                     <option value="no">NO</option>
                                 </select>
                             </div>
-                            <div class="mb-4">
-                                <label class="block text-gray-700 mb-2">Oil Price ($/bbl)</label>
-                                <input
-                                  type="number"
-                                  id="oilPrice"
-                                  class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                  placeholder="70"
-                                />
+
+                            <!-- Fields that should only show when First Entry is "NO" -->
+                            <div id="nonFirstEntryFields" class="hidden">
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 mb-2">Current Oil Production (BOPD) <span class="text-red-500">*</span></label>
+                                    <input type="number"
+                                           id="oilProduction"
+                                           class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                           placeholder="Please enter BOPD"
+                                           required />
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 mb-2">Oil Price ($/bbl) <span class="text-red-500">*</span></label>
+                                    <input type="number"
+                                           id="oilPrice"
+                                           class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                           placeholder="Please enter Oil Price"
+                                           required />
+                                </div>  
+                                
+                                <!-- NEW FIELD: Previous Job Cost -->
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 mb-2">Previous Job Cost (USD)<span class="text-red-500">*</span></label>
+                                    <input type="number"
+                                           id="previousJobCost"
+                                           class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                           placeholder="Please enter previous job cost(If none enter 0)"
+                                           required />
+                                </div>
                             </div>
+
+                            <!-- NEW: Show BOPD and Oil Price for First Entry as well -->
+                            <div id="firstEntryEconomicFields" class="hidden">
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 mb-2">Current Oil Production (BOPD) <span class="text-red-500">*</span></label>
+                                    <input type="number"
+                                           id="oilProductionFirst"
+                                           class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                           placeholder="Please enter BOPD"
+                                           required />
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 mb-2">Oil Price ($/bbl) <span class="text-red-500">*</span></label>
+                                    <input type="number"
+                                           id="oilPriceFirst"
+                                           class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                           placeholder="Please enter Oil Price"
+                                           required />
+                                </div>
+                            </div>
+
+                           <div class="mb-4">
+    <label class="block text-gray-700 mb-2">Field Name</label>
+    <select id="fieldName" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <option value="MINAS" data-complexity-prob="0.096" data-complexity-success="0.9215" data-decline-rate="0.65" data-lifting-cost="20" data-rig-cost="6500">MINAS</option>
+        <option value="PETKO" data-complexity-prob="0.0525" data-complexity-success="1" data-decline-rate="0.30" data-lifting-cost="20" data-rig-cost="7000">PETKO</option>
+        <option value="LIBO" data-complexity-prob="0.0525" data-complexity-success="0.9215" data-decline-rate="0.30" data-lifting-cost="20" data-rig-cost="6500">LIBO</option>
+        <option value="BALAM" data-complexity-prob="0.0525" data-complexity-success="0.9215" data-decline-rate="0.35" data-lifting-cost="20" data-rig-cost="6500">BALAM</option>
+        <option value="BANGKO" data-complexity-prob="0.0525" data-complexity-success="0.9215" data-decline-rate="0.30" data-lifting-cost="20" data-rig-cost="6500">BANGKO</option>
+        <option value="BEKASAP" data-complexity-prob="0.0525" data-complexity-success="0.9215" data-decline-rate="0.30" data-lifting-cost="20" data-rig-cost="6500">BEKASAP</option>
+        <option value="DSF" data-complexity-prob="0.135" data-complexity-success="0.855" data-decline-rate="0.40" data-lifting-cost="15" data-rig-cost="6500">DSF</option>
+    </select>
+</div>
 
                             <div class="mt-6 border-t pt-4">
                                 <h2 class="text-xl font-semibold mb-4 text-blue-800">Wellbore Condition</h2>
@@ -212,40 +350,41 @@
                                 <div class="mb-4">
                                     <label class="block text-gray-700 mb-2">Fishing Type</label>
                                     <select id="fishingType" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                        <option value="0.8">Open Hole Fishing</option>
+                                        <option value="0,8">Open Hole Fishing</option>
                                         <option value="1">Cased Hole Fishing</option>
                                     </select>
                                 </div>
-                                
-                                <div class="mb-4">
-                                    <label class="block text-gray-700 mb-2">Well Geometry (for Fishing Probability)</label>
+
+                                <div class="mb-4 hidden">
+                                    <!-- Add hidden class here -->
+                                    <label class="block text-gray-700 mb-2">Well Geometry (for Fishing Potential - First Entry)</label>
                                     <select id="wellGeometry" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                        <option value="0.01">30°</option>
+                                        <option value="0.01">Less than 30°</option>
                                         <option value="0.02">31° to 60°</option>
                                         <option value="0.03">Greater than 60°</option>
                                     </select>
                                 </div>
-                                
-                                <div class="mb-4">
-                                    <label class="block text-gray-700 mb-2">Well Geometry (for Success Rate)</label>
+
+                                <div class="mb-4 hidden">
+                                    <!-- Add hidden class here -->
+                                    <label class="block text-gray-700 mb-2">Well Geometry (for Success Ratio - Not First Entry )</label>
                                     <select id="wellGeometrySuccess" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                        <option value="1">&lt;30°</option>
+                                        <option value="1">Less than 30°</option>
                                         <option value="0.95">31° to 60°</option>
-                                        <option value="0.9">&gt;60°</option>
+                                        <option value="0.9">Greater than 60°</option>
                                     </select>
                                 </div>
-                                
+
+
                                 <div class="mb-4">
                                     <label class="block text-gray-700 mb-2">Formation Above Downhole Object</label>
-                                    <select
-                                      id="formationAbove"
-                                      class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    >
+                                    <select id="formationAbove"
+                                            class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                                         <option value="0.09">Yes</option>
                                         <option value="0.015">No</option>
                                     </select>
                                 </div>
-                                
+
                                 <div class="mb-4">
                                     <label class="block text-gray-700 mb-2">Period Downhole Object on the Well?</label>
                                     <select id="objectPeriod" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -266,36 +405,34 @@
                                 <div class="mb-4">
                                     <label class="block text-gray-700 mb-2">Downhole Object Have Tail?</label>
                                     <select id="tailPresence" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                        <option value="0.0375">Have Tail &lt;100ft</option>
-                                        <option value="0.075">Have Tail &gt;100ft</option>
+                                        <option value="0.0375">Have Tail <100ft</option>
+                                        <option value="0.075">Have Tail >100ft</option>
                                         <option value="0.0125">Doesn't have tail</option>
                                     </select>
                                 </div>
 
                                 <div class="mb-4">
                                     <label class="block text-gray-700 mb-2">Well Ex TPA (Temporary Plug Abandoned)</label>
-                                    <select
-                                      id="wellExTpa"
-                                      class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    >
+                                    <select id="wellExTpa"
+                                            class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                                         <option value="0.14">Yes</option>
                                         <option value="0.02">No</option>
                                     </select>
                                 </div>
-                                
+
                                 <!-- Fishing Conditions Section -->
                                 <div class="mt-6 border-t pt-4">
                                     <h2 class="text-xl font-semibold mb-4 text-blue-800">Fishing Conditions</h2>
-                                    
+
                                     <div class="mb-4">
                                         <label class="block text-gray-700 mb-2">TOF Information (Top of Fish)</label>
                                         <select id="tofCondition" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                                             <option value="1"> Ready for fishing</option>
                                             <option value="0.85">Needs 1 step prep</option>
-                                            <option value="0.8">Needs &gt;1 step prep</option>
+                                            <option value="0.8">Needs more than 1 step prep</option>
                                         </select>
                                     </div>
-                                    
+
                                     <div class="mb-4">
                                         <label class="block text-gray-700 mb-2">Fish Detail Information</label>
                                         <select id="fishDetailCondition" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -312,10 +449,8 @@
                         <div>
                             <div class="flex justify-between items-center mb-4">
                                 <h2 class="text-xl font-semibold text-blue-800">Fish Entries</h2>
-                                <button
-                                  id="addFishBtn"
-                                  class="bg-navy-700 hover:bg-navy-800 text-white px-4 py-2 rounded-lg flex items-center shadow-md transition-colors duration-200"
-                                >
+                                <button id="addFishBtn"
+                                        class="bg-navy-700 hover:bg-navy-800 text-white px-4 py-2 rounded-lg flex items-center shadow-md transition-colors duration-200">
                                     <i class="fas fa-plus mr-2"></i> Add Fish
                                 </button>
                             </div>
@@ -324,17 +459,8 @@
                                 <!-- Fish entries will be added here -->
                             </div>
 
-                            <div class="mt-6 bg-gray-50 p-4 rounded-lg">
-                                <h3 class="font-semibold mb-2 text-blue-800">Summary of All Fish</h3>
-                                <div id="fishSummary" class="text-sm text-gray-700">
-                                    No fish entries added yet.
-                                </div>
-                            </div>
-
-                            <button
-                              id="calculateBtn"
-                              class="w-full mt-6 bg-navy-700 hover:bg-navy-800 text-white font-bold py-3 px-4 rounded-lg shadow-md transition-all duration-200 hover:shadow-lg"
-                            >
+                            <button id="calculateBtn"
+                                    class="w-full mt-6 bg-navy-700 hover:bg-navy-800 text-white font-bold py-3 px-4 rounded-lg shadow-md transition-all duration-200 hover:shadow-lg">
                                 Calculate All Fishing Parameters
                             </button>
                         </div>
@@ -347,8 +473,8 @@
 
                     <div class="bg-white p-6 rounded-lg shadow mb-6">
                         <div class="mb-6">
-                            <h3 class="text-lg font-semibold mb-4">Potential Fishing</h3>
-                            
+                            <h3 class="text-lg font-semibold mb-4" id="fishingTitle">Potential Fishing</h3>
+
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <div class="p-4 border rounded-lg bg-blue-50">
                                     <div class="flex justify-between items-center">
@@ -356,7 +482,7 @@
                                         <span id="wellNameResult" class="font-bold text-blue-800">--</span>
                                     </div>
                                 </div>
-                                
+
                                 <!-- First Entry Fields (shown when YES) -->
                                 <div id="firstEntryFields" class="hidden">
                                     <div class="p-4 border rounded-lg bg-blue-50">
@@ -367,7 +493,7 @@
                                     </div>
                                     <div class="p-4 border rounded-lg bg-blue-50">
                                         <div class="flex justify-between items-center">
-                                            <span class="font-medium">Fising Potential Cost (USD)</span>
+                                            <span class="font-medium">Fishing Potential Cost (USD)</span>
                                             <span id="estimatedCost" class="font-bold text-blue-800">$0</span>
                                         </div>
                                     </div>
@@ -377,8 +503,21 @@
                                             <span id="cycleTime" class="font-bold text-blue-800">--</span>
                                         </div>
                                     </div>
+                                    <!-- NEW: Add EFT and Recommendation for First Entry -->
+                                    <div class="p-4 border rounded-lg bg-blue-50">
+                                        <div class="flex justify-between items-center">
+                                            <span class="font-medium">EFT (Economic Fishing Time)</span>
+                                            <span id="economicFishingTimeFirst" class="font-bold text-blue-800">-- days</span>
+                                        </div>
+                                    </div>
+                                    <div class="p-4 border rounded-lg" id="costVsEftContainerFirst">
+                                        <div class="flex justify-between items-center">
+                                            <span class="font-medium">Recommendation</span>
+                                            <span id="costVsEftFirst" class="font-bold">--</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                
+
                                 <!-- Actual Fishing Fields (shown when NO) -->
                                 <div id="actualFishingFields" class="hidden">
                                     <div class="p-4 border rounded-lg bg-blue-50">
@@ -389,8 +528,14 @@
                                     </div>
                                     <div class="p-4 border rounded-lg bg-blue-50">
                                         <div class="flex justify-between items-center">
-                                            <span class="font-medium">Planned Fising Cost (USD)</span>
+                                            <span class="font-medium">Planned Fishing Cost (USD)</span>
                                             <span id="fishingCostEstimate" class="font-bold text-blue-800">$0</span>
+                                        </div>
+                                    </div>
+                                    <div class="p-4 border rounded-lg bg-blue-50">
+                                        <div class="flex justify-between items-center">
+                                            <span class="font-medium">Previous Job Cost (USD)</span>
+                                            <span id="previousJobCostResult" class="font-bold text-blue-800">$0</span>
                                         </div>
                                     </div>
                                     <div class="p-4 border rounded-lg bg-blue-50">
@@ -418,25 +563,25 @@
                         <!-- Recommended Fishing Tools Section -->
                         <div class="mt-8 bg-white p-6 rounded-lg shadow">
                             <h3 class="text-lg font-semibold mb-4 text-blue-800">Recommended Fishing Tools</h3>
-                            
+
                             <div class="flex flex-col md:flex-row gap-6">
                                 <!-- Static BHA Assembly Image -->
                                 <div class="w-full md:w-1/3 bg-gray-50 p-4 rounded-lg border">
                                     <div class="text-center">
                                         <h4 class="font-medium mb-2">BHA Assembly</h4>
-                                        <div class="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-500">
-                                            <i class="fas fa-image text-4xl"></i>
-                                        </div>
+                                        <img src="https://github.com/fadelgifari/focus/releases/download/Alpha/BHA.png"
+                                             alt="BHA Assembly Diagram"
+                                             class="w-full h-auto object-contain mx-auto">
                                         <p class="text-sm text-gray-600 mt-2">Top section of standard fishing BHA</p>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Dynamic Tool Recommendations -->
                                 <div class="w-full md:w-2/3">
                                     <div id="bhaRecommendation" class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                         <!-- Tools will be dynamically inserted here -->
                                     </div>
-                                    
+
                                     <div id="toolRecommendationNotes" class="mt-4 p-4 bg-yellow-50 rounded-lg text-sm hidden">
                                         <!-- Recommendation notes will appear here -->
                                     </div>
@@ -445,10 +590,1582 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Fishing Selection Guide Tab -->
+                <div id="selection-guide" class="tab-content">
+                    <h2 class="text-xl font-semibold mb-6 text-blue-800">Fishing Selection Guide</h2>
+                    
+                    <div class="guide-section">
+                        <h3 class="text-lg font-semibold mb-3">Overview</h3>
+                        <p class="mb-4">This guide provides recommendations for selecting appropriate fishing tools based on fish type, well conditions, and operational constraints.</p>
+                        
+                        <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-semibold mb-2">Key Selection Criteria:</h4>
+                            <ul class="list-disc pl-5">
+                                <li>Fish type and dimensions</li>
+                                <li>Wellbore geometry and condition</li>
+                                <li>Fishing environment (cased vs. open hole)</li>
+                                <li>Available fishing tool inventory</li>
+                                <li>Operational constraints and risks</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="guide-section">
+                        <h3 class="text-lg font-semibold mb-3">Tool Selection Matrix</h3>
+                        
+                        <table class="tool-table">
+                            <thead>
+                                <tr>
+                                    <th>Fish Type</th>
+                                    <th>Primary Tool</th>
+                                    <th>Secondary Tool</th>
+                                    <th>Special Considerations</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Tubulars (Pipes, Tubing)</td>
+                                    <td>Overshot</td>
+                                    <td>Spear</td>
+                                    <td>Consider internal/external fishing methods</td>
+                                </tr>
+                                <tr>
+                                    <td>Packer/Completion Equipment</td>
+                                    <td>Spear</td>
+                                    <td>Box Tap</td>
+                                    <td>May require milling if severely damaged</td>
+                                </tr>
+                                <tr>
+                                    <td>Drilling BHA Components</td>
+                                    <td>Overshot</td>
+                                    <td>Taper Tap</td>
+                                    <td>Consider magnetic tools for small metal pieces</td>
+                                </tr>
+                                <tr>
+                                    <td>Junk (Small Metal Pieces)</td>
+                                    <td>Junk Basket</td>
+                                    <td>Magnet</td>
+                                    <td>May require multiple fishing runs</td>
+                                </tr>
+                                <tr>
+                                    <td>Cemented Objects</td>
+                                    <td>Milling Tools</td>
+                                    <td>Washover Tools</td>
+                                    <td>High risk operation, consider sidetrack</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="guide-section">
+                        <h3 class="text-lg font-semibold mb-3">Decision Flowchart</h3>
+                        <div class="bg-gray-100 p-4 rounded-lg text-center">
+                            <p class="mb-4">A comprehensive decision flowchart will be implemented here to guide tool selection based on specific well conditions and fish characteristics.</p>
+                            <div class="inline-block bg-white p-6 rounded-lg shadow">
+                                <i class="fas fa-project-diagram text-4xl text-blue-500 mb-4"></i>
+                                <p class="font-medium">Interactive Selection Tool Coming Soon</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fishing BHA Design Tab -->
+                <div id="bha-design" class="tab-content">
+                    <h2 class="text-xl font-semibold mb-6 text-blue-800">Fishing BHA Design</h2>
+                    
+                    <div class="guide-section">
+                        <h3 class="text-lg font-semibold mb-3">Standard Fishing BHA Components</h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold mb-2">Top Section (Surface to Jar)</h4>
+                                <ul class="list-disc pl-5 mb-4">
+                                    <li>Drill Pipe or Workstring</li>
+                                    <li>Accelerator (if required)</li>
+                                    <li>Drilling Jar</li>
+                                </ul>
+                                
+                                <h4 class="font-semibold mb-2">Middle Section (Jar to Fishing Tool)</h4>
+                                <ul class="list-disc pl-5 mb-4">
+                                    <li>Drill Collars or Heavy Weight Drill Pipe</li>
+                                    <li>Stabilizers (if required)</li>
+                                    <li>Knuckle Joint (for deviated wells)</li>
+                                </ul>
+                                
+                                <h4 class="font-semibold mb-2">Bottom Section (Fishing Tools)</h4>
+                                <ul class="list-disc pl-5">
+                                    <li>Fishing Tool (Overshot, Spear, etc.)</li>
+                                    <li>Grapple/Die Collar</li>
+                                    <li>Mill or Cutting Tool (if required)</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2 text-center">BHA Assembly Diagram</h4>
+                                <img src="https://github.com/fadelgifari/focus/releases/download/Alpha/BHA.png" 
+                                     alt="Fishing BHA Diagram" 
+                                     class="w-full h-auto object-contain mx-auto">
+                                <p class="text-sm text-gray-600 mt-2 text-center">Standard fishing BHA configuration</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="guide-section">
+                        <h3 class="text-lg font-semibold mb-3">BHA Design Considerations</h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold mb-2">Wellbore Factors</h4>
+                                <ul class="list-disc pl-5 mb-4">
+                                    <li>Hole size and casing program</li>
+                                    <li>Wellbore trajectory and dogleg severity</li>
+                                    <li>Formation type and stability</li>
+                                    <li>Mud properties and hydraulics</li>
+                                </ul>
+                                
+                                <h4 class="font-semibold mb-2">Operational Factors</h4>
+                                <ul class="list-disc pl-5">
+                                    <li>Expected fishing loads and jarring forces</li>
+                                    <li>Available rig equipment capabilities</li>
+                                    <li>Fishing tool specifications and limitations</li>
+                                    <li>Risk assessment and contingency planning</li>
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-semibold mb-2">Design Best Practices</h4>
+                                <div class="bg-green-50 p-4 rounded-lg">
+                                    <ul class="list-disc pl-5">
+                                        <li>Include adequate weight for effective jarring</li>
+                                        <li>Use appropriate stabilizers for wellbore control</li>
+                                        <li>Consider fishing tool access and engagement requirements</li>
+                                        <li>Plan for contingencies with backup tools</li>
+                                        <li>Verify tool compatibility and connection types</li>
+                                    </ul>
+                                </div>
+                                
+                                <h4 class="font-semibold mt-4 mb-2">Common BHA Configurations</h4>
+                                <div class="bg-blue-50 p-3 rounded-lg">
+                                    <p class="text-sm"><strong>Standard Configuration:</strong> DP + Jar + DC + Fishing Tool</p>
+                                    <p class="text-sm"><strong>Deviated Well:</strong> DP + Jar + KJ + DC + Fishing Tool</p>
+                                    <p class="text-sm"><strong>High-Risk Fishing:</strong> DP + Accelerator + Jar + DC + Fishing Tool</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BHA Based on Fish Type Tab -->
+                <div id="fish-type-bha" class="tab-content">
+                    <h2 class="text-xl font-semibold mb-6 text-blue-800">BHA Based on Fish Type</h2>
+                    
+                    <div class="guide-section">
+                        <h3 class="text-lg font-semibold mb-4">Recommended BHA Configurations by Fish Type</h3>
+                        
+                        <div class="overflow-x-auto">
+                            <table class="tool-table">
+                                <thead>
+                                    <tr>
+                                        <th>Fish Type</th>
+                                        <th>Recommended BHA</th>
+                                        <th>Key Components</th>
+                                        <th>Special Notes</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Mechanical Packer</td>
+                                        <td>DP + Jar + DC + Spear</td>
+                                        <td>Spear, Jar, DC</td>
+                                        <td>May require milling if packer is set</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tubing/String</td>
+                                        <td>DP + Jar + DC + Overshot</td>
+                                        <td>Overshot, Jar, DC</td>
+                                        <td>Consider internal fishing with spear</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Drilling BHA</td>
+                                        <td>DP + Accelerator + Jar + DC + Overshot</td>
+                                        <td>Overshot, Accelerator, Jar</td>
+                                        <td>High impact jarring may be required</td>
+                                    </tr>
+                                    <tr>
+                                        <td>ESP Assembly</td>
+                                        <td>DP + Jar + KJ + DC + Overshot</td>
+                                        <td>Overshot, Knuckle Joint, Jar</td>
+                                        <td>Delicate components, use caution</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Liner/Tubing Hanger</td>
+                                        <td>DP + Jar + DC + Box Tap</td>
+                                        <td>Box Tap, Jar, DC</td>
+                                        <td>May require special engagement tools</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Junks/Small Parts</td>
+                                        <td>DP + DC + Junk Basket</td>
+                                        <td>Junk Basket, Magnets</td>
+                                        <td>May require multiple runs</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cemented Objects</td>
+                                        <td>DP + DC + Mill</td>
+                                        <td>Mill, Stabilizers</td>
+                                        <td>High risk operation</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="guide-section">
+                        <h3 class="text-lg font-semibold mb-3">Fish-Specific Considerations</h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold mb-2 text-blue-700">Packer Fishing</h4>
+                                <ul class="list-disc pl-5 mb-4">
+                                    <li>Verify packer setting mechanism before fishing</li>
+                                    <li>Consider chemical cutters for difficult retrievals</li>
+                                    <li>Use spear for internal fishing of packer bore</li>
+                                    <li>Milling may be required if conventional methods fail</li>
+                                </ul>
+                                
+                                <h4 class="font-semibold mb-2 text-blue-700">Tubular Fishing</h4>
+                                <ul class="list-disc pl-5">
+                                    <li>Determine if fishing internal or external is preferable</li>
+                                    <li>Consider washover if fish is stuck or cemented</li>
+                                    <li>Use overshot for external fishing of pipe</li>
+                                    <li>Use spear for internal fishing of pipe</li>
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-semibold mb-2 text-blue-700">BHA Fishing</h4>
+                                <ul class="list-disc pl-5 mb-4">
+                                    <li>Strong jarring assembly typically required</li>
+                                    <li>Consider accelerator for additional impact</li>
+                                    <li>Overshot is primary tool for drill collars</li>
+                                    <li>May require milling if fish is severely damaged</li>
+                                </ul>
+                                
+                                <h4 class="font-semibold mb-2 text-blue-700">Junk Fishing</h4>
+                                <ul class="list-disc pl-5">
+                                    <li>Use junk baskets for small, loose pieces</li>
+                                    <li>Magnets effective for ferrous materials</li>
+                                    <li>May require multiple fishing runs</li>
+                                    <li>Consider milling if junk cannot be retrieved</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="guide-section">
+                        <h3 class="text-lg font-semibold mb-3">Interactive BHA Builder</h3>
+                        <div class="bg-blue-50 p-6 rounded-lg text-center">
+                            <i class="fas fa-tools text-4xl text-blue-500 mb-4"></i>
+                            <p class="font-medium mb-2">Custom BHA Configuration Tool</p>
+                            <p class="text-sm text-gray-600 mb-4">Select your fish type and well conditions to generate a customized BHA recommendation.</p>
+                            <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                                Launch BHA Builder
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fishing Operation Guidance Tab -->
+                <div id="operation-guidance" class="tab-content">
+                    <h2 class="text-xl font-semibold mb-6 text-blue-800">Fishing Operation Guidance</h2>
+                    
+                    <div class="guide-section">
+                        <h3 class="text-lg font-semibold mb-3">Fishing Operation Workflow</h3>
+                        
+                        <div class="bg-gray-50 p-4 rounded-lg mb-4">
+                            <div class="flex flex-col md:flex-row justify-between items-center mb-4">
+                                <div class="flex items-center mb-2 md:mb-0">
+                                    <div class="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center mr-2">1</div>
+                                    <span class="font-medium">Planning & Preparation</span>
+                                </div>
+                                <div class="flex items-center mb-2 md:mb-0">
+                                    <div class="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center mr-2">2</div>
+                                    <span class="font-medium">Tool Selection & BHA Design</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center mr-2">3</div>
+                                    <span class="font-medium">Execution & Monitoring</span>
+                                </div>
+                            </div>
+                            
+                            <div class="border-t pt-4">
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div>
+                                        <h4 class="font-semibold mb-2">Planning Phase</h4>
+                                        <ul class="list-disc pl-5 text-sm">
+                                            <li>Assess fish characteristics</li>
+                                            <li>Review wellbore conditions</li>
+                                            <li>Identify operational constraints</li>
+                                            <li>Develop contingency plans</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold mb-2">Tool Selection</h4>
+                                        <ul class="list-disc pl-5 text-sm">
+                                            <li>Select appropriate fishing tools</li>
+                                            <li>Design optimized BHA</li>
+                                            <li>Verify tool availability</li>
+                                            <li>Prepare backup options</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold mb-2">Execution</h4>
+                                        <ul class="list-disc pl-5 text-sm">
+                                            <li>Run in hole with fishing assembly</li>
+                                            <li>Engage and secure fish</li>
+                                            <li>Apply appropriate retrieval forces</li>
+                                            <li>Monitor and document operations</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="guide-section">
+                        <h3 class="text-lg font-semibold mb-3">Best Practices & Safety Guidelines</h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold mb-2 text-red-600">Safety Considerations</h4>
+                                <div class="bg-red-50 p-4 rounded-lg mb-4">
+                                    <ul class="list-disc pl-5">
+                                        <li>Always conduct thorough risk assessment before fishing operations</li>
+                                        <li>Ensure proper well control equipment is functional</li>
+                                        <li>Establish clear communication protocols</li>
+                                        <li>Monitor well pressures continuously</li>
+                                        <li>Have emergency response plans in place</li>
+                                    </ul>
+                                </div>
+                                
+                                <h4 class="font-semibold mb-2">Operational Efficiency</h4>
+                                <ul class="list-disc pl-5">
+                                    <li>Document all fishing operations thoroughly</li>
+                                    <li>Monitor torque and drag trends carefully</li>
+                                    <li>Use appropriate jarring procedures</li>
+                                    <li>Establish clear success criteria</li>
+                                    <li>Know when to change fishing strategy</li>
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-semibold mb-2">Troubleshooting Common Issues</h4>
+                                
+                                <div class="mb-4">
+                                    <h5 class="font-medium mb-1">Fish Cannot Be Engaged</h5>
+                                    <ul class="list-disc pl-5 text-sm">
+                                        <li>Verify fish depth and condition with caliper log</li>
+                                        <li>Consider different fishing tool type</li>
+                                        <li>Check for wellbore obstructions</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <h5 class="font-medium mb-1">Fish Slips During Retrieval</h5>
+                                    <ul class="list-disc pl-5 text-sm">
+                                        <li>Check grapple/die condition and size</li>
+                                        <li>Apply appropriate weight while pulling</li>
+                                        <li>Consider using different engagement method</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <h5 class="font-medium mb-1">Excessive Drag or Sticking</h5>
+                                    <ul class="list-disc pl-5 text-sm">
+                                        <li>Check for wellbore geometry issues</li>
+                                        <li>Consider different BHA configuration</li>
+                                        <li>Evaluate mud properties and hydraulics</li>
+                                    </ul>
+                                </div>
+                                
+                                <div>
+                                    <h5 class="font-medium mb-1">Multiple Fishing Attempts Fail</h5>
+                                    <ul class="list-disc pl-5 text-sm">
+                                        <li>Re-evaluate fishing strategy</li>
+                                        <li>Consider sidetrack or abandonment</li>
+                                        <li>Consult with fishing experts</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="guide-section">
+                        <h3 class="text-lg font-semibold mb-3">Decision Support Tools</h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="bg-white p-4 rounded-lg border text-center">
+                                <i class="fas fa-calculator text-3xl text-blue-500 mb-2"></i>
+                                <h4 class="font-semibold mb-2">Economic Analysis</h4>
+                                <p class="text-sm text-gray-600">Evaluate the economic viability of fishing operations</p>
+                            </div>
+                            
+                            <div class="bg-white p-4 rounded-lg border text-center">
+                                <i class="fas fa-clipboard-check text-3xl text-blue-500 mb-2"></i>
+                                <h4 class="font-semibold mb-2">Checklist Manager</h4>
+                                <p class="text-sm text-gray-600">Step-by-step operational checklists</p>
+                            </div>
+                            
+                            <div class="bg-white p-4 rounded-lg border text-center">
+                                <i class="fas fa-chart-line text-3xl text-blue-500 mb-2"></i>
+                                <h4 class="font-semibold mb-2">Performance Tracking</h4>
+                                <p class="text-sm text-gray-600">Monitor and analyze fishing operation metrics</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <script src="app.js"></script>
-</body>
+    <script>
+        // Tab functionality
+        document.getElementById('firstEntry').addEventListener('change', function () {
+            toggleFishingDisplay();
+            toggleWellGeometryFields();
+            toggleNonFirstEntryFields();
+            toggleFirstEntryEconomicFields();
+            updateEconomicAnalysis(
+                getTotalTimeEstimate(),
+                getTotalCostEstimate(),
+                calculateFishingProbability()
+            );
+        });
+
+        function toggleNonFirstEntryFields() {
+            const isFirstEntry = document.getElementById('firstEntry').value === 'yes';
+            const nonFirstEntryFields = document.getElementById('nonFirstEntryFields');
+
+            if (isFirstEntry) {
+                nonFirstEntryFields.classList.add('hidden');
+            } else {
+                nonFirstEntryFields.classList.remove('hidden');
+            }
+        }
+
+        function toggleFirstEntryEconomicFields() {
+            const isFirstEntry = document.getElementById('firstEntry').value === 'yes';
+            const firstEntryEconomicFields = document.getElementById('firstEntryEconomicFields');
+
+            if (isFirstEntry) {
+                firstEntryEconomicFields.classList.remove('hidden');
+            } else {
+                firstEntryEconomicFields.classList.add('hidden');
+            }
+        }
+
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const tabId = btn.getAttribute('data-tab');
+
+                // If trying to go to economic tab without required fields
+                if (tabId === 'economic') {
+                    const firstEntry = document.getElementById('firstEntry');
+                    const oilProduction = document.getElementById('oilProduction');
+                    const oilPrice = document.getElementById('oilPrice');
+                    const previousJobCost = document.getElementById('previousJobCost');
+                    const oilProductionFirst = document.getElementById('oilProductionFirst');
+                    const oilPriceFirst = document.getElementById('oilPriceFirst');
+
+                    let isValid = true;
+
+                    if (!firstEntry.value) {
+                        firstEntry.classList.add('border-red-500');
+                        isValid = false;
+                    }
+
+                    // Validate based on First Entry selection
+                    if (firstEntry.value === 'no') {
+                        if (!oilProduction.value) {
+                            oilProduction.classList.add('border-red-500');
+                            isValid = false;
+                        }
+
+                        if (!oilPrice.value) {
+                            oilPrice.classList.add('border-red-500');
+                            isValid = false;
+                        }
+                        
+                        if (!previousJobCost.value) {
+                            previousJobCost.classList.add('border-red-500');
+                            isValid = false;
+                        }
+                    } else if (firstEntry.value === 'yes') {
+                        // For First Entry, also require BOPD and Oil Price for EFT calculation
+                        if (!oilProductionFirst.value) {
+                            oilProductionFirst.classList.add('border-red-500');
+                            isValid = false;
+                        }
+
+                        if (!oilPriceFirst.value) {
+                            oilPriceFirst.classList.add('border-red-500');
+                            isValid = false;
+                        }
+                    }
+
+                    if (!isValid) {
+                        e.preventDefault();
+                        alert('Please fill in all required fields (marked with *) before viewing results');
+                        return;
+                    }
+                }
+
+                // Update active tab button
+                document.querySelectorAll('.tab-btn').forEach(tabBtn => {
+                    tabBtn.classList.remove('text-blue-800', 'border-b-2', 'border-blue-800');
+                    tabBtn.classList.add('text-gray-500');
+                });
+                btn.classList.remove('text-gray-500');
+                btn.classList.add('text-blue-800', 'border-b-2', 'border-blue-800');
+
+                // Update active tab content
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Fish entry management
+        const fishEntriesContainer = document.getElementById('fishEntriesContainer');
+        const addFishBtn = document.getElementById('addFishBtn');
+
+        addFishBtn.addEventListener('click', addFishEntry);
+
+        function addFishEntry() {
+            const fishEntries = document.querySelectorAll('.fish-entry');
+            if (fishEntries.length >= 3) {
+                return;
+            }
+
+            const fishNumber = fishEntries.length + 1;
+            const fishId = `fish-${fishNumber}`;
+
+            const fishEntry = document.createElement('div');
+            fishEntry.className = 'fish-entry';
+            fishEntry.id = fishId;
+
+            fishEntry.innerHTML = `
+                            <button class="remove-fish-btn" data-fish-id="${fishId}">
+                                <i class="fas fa-times"></i>
+                            </button>
+                            <h3 class="font-semibold text-blue-700 mb-3">Fish #${fishNumber}</h3>
+
+                            <div class="mb-4 bg-gray-50 p-3 rounded-lg">
+                                <h4 class="font-medium text-sm mb-2 text-gray-700">Fish Type</h4>
+                                <select class="fish-type w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    <option value="mechPacker10_3_4">10-3/4" Mechanical Packer</option>
+                                    <option value="mechPacker9_5_8">9-5/8" Mechanical Packer</option>
+                                    <option value="mechPacker7">7" Mechanical Packer</option>
+                                    <option value="cpa9_5_8">9-5/8" CPA Assembly</option>
+                                    <option value="cpa7">7" CPA Assembly</option>
+                                    <option value="tubingHanger">7" Tubing Hanger</option>
+                                    <option value="espTubing">ESP</option>
+                                    <option value="pump">Pump</option>
+                                    <option value="cibp">CIBP</option>
+                                    <option value="tubular">Tubular</option>
+                                    <option value="tubularCemented">Tubular Cemented</option>
+                                    <option value="drillingBHA">Drilling BHA</option>
+                                    <option value="loggingTool">Logging Tool</option>
+                                    <option value="liner4">4" Liner</option>
+                                    <option value="liner5_1_2">5-1/2" Liner</option>
+                                    <option value="liner6_5_8">6-5/8" Liner</option>
+                                    <option value="casing">Casing</option>
+                                    <option value="dc">DC</option>
+                                    <option value="bullplug">Bullplug</option>
+                                    <option value="cone">Cone</option>
+                                    <option value="sandBailer">Sand Bailer</option>
+                                    <option value="sinkerBar">Sinker Bar</option>
+                                    <option value="junks">Junks (others)</option>
+                                </select>
+                            </div>
+                        `;
+
+            fishEntriesContainer.appendChild(fishEntry);
+
+            // Add event listener to the remove button
+            fishEntry.querySelector('.remove-fish-btn').addEventListener('click', function () {
+                removeFishEntry(this.getAttribute('data-fish-id'));
+            });
+
+            // Add event listener to fish type change
+            fishEntry.querySelector('.fish-type').addEventListener('change', function () {
+                updateEconomicAnalysis(
+                    getTotalTimeEstimate(),
+                    getTotalCostEstimate(),
+                    calculateFishingProbability()
+                );
+                recommendFishingTools();
+            });
+        }
+
+        function removeFishEntry(fishId) {
+            const fishEntry = document.getElementById(fishId);
+            if (fishEntry) {
+                fishEntry.remove();
+
+                // Renumber all remaining fish entries
+                const fishEntries = document.querySelectorAll('.fish-entry');
+                fishEntries.forEach((entry, index) => {
+                    const newNumber = index + 1;
+                    entry.id = `fish-${newNumber}`;
+                    entry.querySelector('h3').textContent = `Fish #${newNumber}`;
+                    entry.querySelector('.remove-fish-btn').setAttribute('data-fish-id', `fish-${newNumber}`);
+                });
+
+                updateEconomicAnalysis(
+                    getTotalTimeEstimate(),
+                    getTotalCostEstimate(),
+                    calculateFishingProbability()
+                );
+                recommendFishingTools();
+            }
+        }
+
+        document.getElementById('oilProduction').addEventListener('input', function () {
+            if (this.value) {
+                this.classList.remove('border-red-500');
+            }
+        });
+
+        document.getElementById('oilPrice').addEventListener('input', function () {
+            if (this.value) {
+                this.classList.remove('border-red-500');
+            }
+        });
+        
+        document.getElementById('previousJobCost').addEventListener('input', function () {
+            if (this.value) {
+                this.classList.remove('border-red-500');
+            }
+        });
+
+        document.getElementById('oilProductionFirst').addEventListener('input', function () {
+            if (this.value) {
+                this.classList.remove('border-red-500');
+            }
+        });
+
+        document.getElementById('oilPriceFirst').addEventListener('input', function () {
+            if (this.value) {
+                this.classList.remove('border-red-500');
+            }
+        });
+
+        // Helper functions to get current totals
+        function getTotalTimeEstimate() {
+            let total = 0;
+            document.querySelectorAll('.fish-entry').forEach(entry => {
+                const timeText = entry.querySelector('.time-estimate')?.textContent;
+                if (timeText) {
+                    total += parseFloat(timeText.replace(' days', ''));
+                }
+            });
+            return total;
+        }
+
+        function getTotalCostEstimate() {
+            let total = 0;
+            document.querySelectorAll('.fish-entry').forEach(entry => {
+                const costText = entry.querySelector('.cost-estimate')?.textContent;
+                if (costText) {
+                    total += parseFloat(costText.replace('$', '').replace(/,/g, ''));
+                }
+            });
+            return total;
+        }
+
+        // Get previous job cost
+        function getPreviousJobCost() {
+            return parseFloat(document.getElementById('previousJobCost').value) || 0;
+        }
+
+        // Get BOPD based on First Entry selection
+        function getBOPD() {
+            const isFirstEntry = document.getElementById('firstEntry').value === 'yes';
+            if (isFirstEntry) {
+                return parseFloat(document.getElementById('oilProductionFirst').value) || 0;
+            } else {
+                return parseFloat(document.getElementById('oilProduction').value) || 0;
+            }
+        }
+
+        // Get Oil Price based on First Entry selection
+        function getOilPrice() {
+            const isFirstEntry = document.getElementById('firstEntry').value === 'yes';
+            if (isFirstEntry) {
+                return parseFloat(document.getElementById('oilPriceFirst').value) || 0;
+            } else {
+                return parseFloat(document.getElementById('oilPrice').value) || 0;
+            }
+        }
+
+        // Calculation logic
+        document.getElementById('calculateBtn').addEventListener('click', function (e) {
+            const firstEntry = document.getElementById('firstEntry');
+            const oilProduction = document.getElementById('oilProduction');
+            const oilPrice = document.getElementById('oilPrice');
+            const previousJobCost = document.getElementById('previousJobCost');
+            const oilProductionFirst = document.getElementById('oilProductionFirst');
+            const oilPriceFirst = document.getElementById('oilPriceFirst');
+
+            // Check if fish entries exist
+            const fishEntries = document.querySelectorAll('.fish-entry');
+
+            let isValid = true;
+            let errorMessage = 'Please fill in all required fields (marked with *) before calculating:';
+
+            // Check first entry field
+            if (!firstEntry.value) {
+                firstEntry.classList.add('border-red-500');
+                errorMessage += '\n- First Entry selection';
+                isValid = false;
+            }
+
+            // Validate based on First Entry selection
+            if (firstEntry.value === 'no') {
+                if (!oilProduction.value) {
+                    oilProduction.classList.add('border-red-500');
+                    errorMessage += '\n- Current Oil Production';
+                    isValid = false;
+                }
+
+                if (!oilPrice.value) {
+                    oilPrice.classList.add('border-red-500');
+                    errorMessage += '\n- Oil Price';
+                    isValid = false;
+                }
+                
+                if (!previousJobCost.value) {
+                    previousJobCost.classList.add('border-red-500');
+                    errorMessage += '\n- Previous Job Cost';
+                    isValid = false;
+                }
+            } else if (firstEntry.value === 'yes') {
+                // For First Entry, also require BOPD and Oil Price for EFT calculation
+                if (!oilProductionFirst.value) {
+                    oilProductionFirst.classList.add('border-red-500');
+                    errorMessage += '\n- Current Oil Production';
+                    isValid = false;
+                }
+
+                if (!oilPriceFirst.value) {
+                    oilPriceFirst.classList.add('border-red-500');
+                    errorMessage += '\n- Oil Price';
+                    isValid = false;
+                }
+            }
+
+            // Check if at least one fish entry exists
+            if (fishEntries.length === 0) {
+                errorMessage += '\n- At least one fish entry must be added';
+                isValid = false;
+            }
+
+            if (!isValid) {
+                e.preventDefault();
+                alert(errorMessage);
+                return false;
+            } else {
+                calculateAllFishParameters();
+                document.querySelector('[data-tab="economic"]').click();
+            }
+        });
+
+        function calculateAllFishParameters() {
+            const fishEntries = document.querySelectorAll('.fish-entry');
+            if (fishEntries.length === 0) {
+                alert('Please add at least one fish entry before calculating.');
+                return;
+            }
+
+            let totalTimeEstimate = 0;
+            let totalCostEstimate = 0;
+
+            fishEntries.forEach(fishEntry => {
+                const result = calculateSingleFishParameters(fishEntry);
+                if (result) {
+                    totalTimeEstimate += result.timeEstimate;
+                    totalCostEstimate += result.costEstimate;
+                }
+            });
+
+            // Calculate fishing probability (sum of factors only)
+            const fishingProbabilityValue = calculateFishingProbability();
+
+            // Update economic analysis
+            updateEconomicAnalysis(totalTimeEstimate, totalCostEstimate, fishingProbabilityValue);
+
+            // Update tool recommendations
+            recommendFishingTools();
+        }
+
+       function calculateSingleFishParameters(fishEntry) {
+    // Get fish-specific parameters
+    const fishType = fishEntry.querySelector('.fish-type').value;
+
+    // Get rig cost from selected field
+    const fieldNameSelect = document.getElementById('fieldName');
+    const selectedField = fieldNameSelect.options[fieldNameSelect.selectedIndex];
+    const rigCost = parseFloat(selectedField.getAttribute('data-rig-cost'));
+
+    // Base time estimates and costs for each fish type with updated success rates
+    const fishTypeData = {
+        'mechPacker10_3_4': { days: 4.000, dailyCost: 1679.85, successRate: 1.0, potentialRate: 0.100 },
+        'mechPacker9_5_8': { days: 4.000, dailyCost: 4098.50, successRate: 0.75, potentialRate: 0.050 },
+        'mechPacker7': { days: 3.000, dailyCost: 4221.33, successRate: 0.97, potentialRate: 0.030 },
+        'cpa9_5_8': { days: 2.000, dailyCost: 2376.00, successRate: 1.0, potentialRate: 0.060 },
+        'cpa7': { days: 2.500, dailyCost: 3000.00, successRate: 1.0, potentialRate: 0.045 },
+        'tubingHanger': { days: 1.700, dailyCost: 1324.12, successRate: 1.0, potentialRate: 0.010 },
+        'espTubing': { days: 6.000, dailyCost: 2332.00, successRate: 0.83, potentialRate: 0.000 },
+        'pump': { days: 3.610, dailyCost: 2036.84, successRate: 0.92, potentialRate: 0.100 },
+        'cibp': { days: 2.600, dailyCost: 3249.62, successRate: 0.81, potentialRate: 0.100 },
+        'tubular': { days: 3.470, dailyCost: 1724.50, successRate: 0.90, potentialRate: 0.000 },
+        'tubularCemented': { days: 11.000, dailyCost: 2204.82, successRate: 0.67, potentialRate: 0.200 },
+        'drillingBHA': { days: 8.500, dailyCost: 2476.94, successRate: 0.63, potentialRate: 0.070 },
+        'loggingTool': { days: 4.000, dailyCost: 393.75, successRate: 0.82, potentialRate: 0.060 },
+        'liner4': { days: 4.500, dailyCost: 4304.89, successRate: 1.0, potentialRate: 0.050 },
+        'liner5_1_2': { days: 4.500, dailyCost: 3504.67, successRate: 0.93, potentialRate: 0.090 },
+        'liner6_5_8': { days: 4.500, dailyCost: 4071.33, successRate: 0.92, potentialRate: 0.150 },
+        'casing': { days: 5.000, dailyCost: 1875.00, successRate: 1.0, potentialRate: 0.010 },
+        'dc': { days: 2.000, dailyCost: 1379.39, successRate: 1.0, potentialRate: 0.000 },
+        'bullplug': { days: 3.000, dailyCost: 1945.33, successRate: 0.85, potentialRate: 0.000 },
+        'cone': { days: 5.000, dailyCost: 1321.40, successRate: 0.90, potentialRate: 0.000 },
+        'sandBailer': { days: 3.000, dailyCost: 1007.22, successRate: 1.0, potentialRate: 0.000 },
+        'sinkerBar': { days: 3.000, dailyCost: 1330.67, successRate: 1.0, potentialRate: 0.000 },
+        'junks': { days: 2.700, dailyCost: 1118.89, successRate: 0.75, potentialRate: 0.030 }
+    };
+
+    // Get base time estimate and cost
+    const fishData = fishTypeData[fishType] || { days: 3.0, dailyCost: 1500.00, successRate: 0.80 };
+    const timeEstimate = fishData.days;
+    
+    // Calculate total cost including rig cost (daily fishing cost + rig cost) * days
+    const dailyTotalCost = fishData.dailyCost + rigCost;
+    const costEstimate = dailyTotalCost * fishData.days;
+    
+    const successRate = fishData.successRate;
+
+    return {
+        timeEstimate,
+        costEstimate,
+        successRate
+    };
+}
+
+        function calculateFishingProbability() {
+            // Get all probability factors (sum only) - EXCLUDE casing conditions for First Entry
+            const wellExTpa = parseFloat(document.getElementById('wellExTpa').value) || 0;
+            const wellGeometry = parseFloat(document.getElementById('wellGeometry').value) || 0;
+            const formationAbove = parseFloat(document.getElementById('formationAbove').value) || 0;
+            const objectPeriod = parseFloat(document.getElementById('objectPeriod').value) || 0;
+            const safetyJoint = parseFloat(document.getElementById('safetyJoint').value) || 0;
+            const tailPresence = parseFloat(document.getElementById('tailPresence').value) || 0;
+
+            // Field complexity (MINAS = 0.096)
+            const fieldName = document.getElementById('fieldName');
+            const fieldComplexityProb = parseFloat(
+                fieldName.options[fieldName.selectedIndex].getAttribute('data-complexity-prob')
+            ) || 0;
+
+            // Calculate average potential rate from selected fish (always use 3 values)
+            const fishEntries = document.querySelectorAll('.fish-entry');
+            let totalPotentialRate = 0;
+            let count = 0;
+
+            // Sum potential rates of selected fish
+            fishEntries.forEach(entry => {
+                const fishType = entry.querySelector('.fish-type').value;
+                const fishData = getFishTypeData(fishType);
+                totalPotentialRate += fishData.potentialRate || 0;
+                count++;
+            });
+
+            // Pad with 0.0 to always average 3 values like Excel
+            while (count < 3) {
+                totalPotentialRate += 0.0;
+                count++;
+            }
+
+            const avgPotentialRate = totalPotentialRate / 3;
+
+            // EXCLUSIVE FISHING POTENTIAL LOGIC FOR FIRST ENTRY ONLY
+            const isFirstEntry = document.getElementById('firstEntry').value === 'yes';
+            
+            // Get the actual string values from the dropdowns, not parsed numbers
+            const casingPartedCollapseValue = document.getElementById('casingPartedCollapse').value;
+            const casingDamageValue = document.getElementById('casingDamage').value;
+
+            console.log('First Entry:', isFirstEntry);
+            console.log('Casing Parted/Collapse value:', casingPartedCollapseValue, 'Type:', typeof casingPartedCollapseValue);
+            console.log('Casing Damage value:', casingDamageValue, 'Type:', typeof casingDamageValue);
+
+            // If "Neither tools nor fish can pass" is selected for EITHER casing field, return 100% fishing potential
+            if (isFirstEntry) {
+                if (casingPartedCollapseValue === '0' || casingDamageValue === '0') {
+                    console.log('Returning 100% for "Neither tools nor fish can pass"');
+                    return 100.00; // Exclusive 100% fishing potential for these conditions
+                }
+                // For "Both tools & fish can pass (clay present)" also return 100%
+                if (casingPartedCollapseValue === '0.2' || casingDamageValue === '0.57') {
+                    console.log('Returning 100% for "Both tools & fish can pass"');
+                    return 100.00; // Exclusive 100% fishing potential for these conditions too
+                }
+            }
+
+            // CORRECT SUM (matches Excel) with added potential rate
+            // NOTE: Casing conditions are handled separately for First Entry
+            const totalProbability =
+                wellExTpa +
+                wellGeometry +
+                formationAbove +
+                objectPeriod +
+                safetyJoint +
+                tailPresence +
+                fieldComplexityProb +
+                avgPotentialRate;
+
+            // Ensure we return a valid number between 0 and 100
+            const result = Math.min(100, Math.max(0, totalProbability * 100));
+            console.log('Normal calculation result:', result);
+            return result.toFixed(2);
+        }
+
+        function calculateAverageFishSuccessRate() {
+            const fishEntries = document.querySelectorAll('.fish-entry');
+
+            // Get success rates of selected fish
+            const fishRates = Array.from(fishEntries).map(entry => {
+                const fishType = entry.querySelector('.fish-type').value;
+                return getFishTypeData(fishType).successRate;
+            });
+
+            // Pad with 1.0 (100%) to always average 3 values like Excel
+            while (fishRates.length < 3) fishRates.push(1.0);
+
+            const average = fishRates.reduce((sum, rate) => sum + rate, 0) / 3;
+            return average; // Returns decimal (0.9167) for use in other calculations
+        }
+
+        function calculateFishingSuccessRate() {
+            // Get casing conditions first
+            const casingPartedCollapse = parseFloat(document.getElementById('casingPartedCollapse').value);
+            const casingDamage = parseFloat(document.getElementById('casingDamage').value);
+
+            // If either casing condition is 0, return 0 immediately
+            if (casingPartedCollapse === 0 || casingDamage === 0) {
+                const notesContainer = document.getElementById('toolRecommendationNotes');
+                notesContainer.innerHTML = `
+                <div class="p-2 bg-red-100 border border-red-300 rounded text-red-800">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                    Fishing impossible - Neither tools nor fish can pass through casing
+                </div>
+            `;
+                notesContainer.classList.remove('hidden');
+                return 0; // Return 0 as number
+            }
+            try {
+                // Get casing conditions first
+                const casingPartedCollapse = parseFloat(document.getElementById('casingPartedCollapse').value) || 1;
+                const casingDamage = parseFloat(document.getElementById('casingDamage').value) || 1;
+
+                // If either casing condition is 0 (neither tools nor fish can pass), return 0 immediately
+                if (casingPartedCollapse === 0 || casingDamage === 0) {
+                    // Show warning in the notes container
+                    const notesContainer = document.getElementById('toolRecommendationNotes');
+                    notesContainer.innerHTML = `
+                    <div class="p-2 bg-red-100 border border-red-300 rounded text-red-800">
+                        <i class="fas fa-exclamation-triangle mr-2"></i>
+                        Fishing impossible - Neither tools nor fish can pass through casing
+                    </div>
+                `;
+                    notesContainer.classList.remove('hidden');
+                    return 0; // Return 0 as a number, not a string
+                }
+
+                // Only proceed with other calculations if casing conditions allow fishing
+                const factors = {
+                    casingPartedCollapse: casingPartedCollapse,
+                    casingDamage: casingDamage,
+                    fishingType: parseFloat(document.getElementById('fishingType').value) || 1,
+                    wellGeometrySuccess: parseFloat(document.getElementById('wellGeometrySuccess').value) || 1,
+                    tofCondition: parseFloat(document.getElementById('tofCondition').value) || 1,
+                    fishDetailCondition: parseFloat(document.getElementById('fishDetailCondition').value) || 1,
+                    fieldComplexitySuccess: parseFloat(document.querySelector('#fieldName option:checked')?.getAttribute('data-complexity-success')) || 1
+                };
+
+                // Calculate average fish success rate (always 3 values)
+                const avgFishSuccess = calculateAverageFishSuccessRate();
+
+                // Calculate final success rate
+                const successRate =
+                    factors.casingPartedCollapse *
+                    factors.casingDamage *
+                    factors.fishingType *
+                    factors.wellGeometrySuccess *
+                    avgFishSuccess *
+                    factors.fishDetailCondition *
+                    factors.tofCondition *
+                    factors.fieldComplexitySuccess;
+
+                return successRate * 100; // Return as number, not fixed string
+            } catch (error) {
+                console.error("Error calculating fishing success rate:", error);
+                return 0;
+            }
+        }
+
+        function getFishTypeData(fishType) {
+    const fishTypeData = {
+        'mechPacker10_3_4': { days: 4.000, dailyCost: 1679.85, successRate: 1.0, potentialRate: 0.100 },
+        'mechPacker9_5_8': { days: 4.000, dailyCost: 4098.50, successRate: 0.75, potentialRate: 0.050 },
+        'mechPacker7': { days: 3.000, dailyCost: 4221.33, successRate: 0.97, potentialRate: 0.030 },
+        'cpa9_5_8': { days: 2.000, dailyCost: 2376.00, successRate: 1.0, potentialRate: 0.060 },
+        'cpa7': { days: 2.500, dailyCost: 3000.00, successRate: 1.0, potentialRate: 0.045 },
+        'tubingHanger': { days: 1.700, dailyCost: 1324.12, successRate: 1.0, potentialRate: 0.010 },
+        'espTubing': { days: 6.000, dailyCost: 2332.00, successRate: 0.83, potentialRate: 0.000 },
+        'pump': { days: 3.610, dailyCost: 2036.84, successRate: 0.92, potentialRate: 0.100 },
+        'cibp': { days: 2.600, dailyCost: 3249.62, successRate: 0.81, potentialRate: 0.100 },
+        'tubular': { days: 3.470, dailyCost: 1724.50, successRate: 0.90, potentialRate: 0.000 },
+        'tubularCemented': { days: 11.000, dailyCost: 2204.82, successRate: 0.67, potentialRate: 0.200 },
+        'drillingBHA': { days: 8.500, dailyCost: 2476.94, successRate: 0.63, potentialRate: 0.070 },
+        'loggingTool': { days: 4.000, dailyCost: 393.75, successRate: 0.82, potentialRate: 0.060 },
+        'liner4': { days: 4.500, dailyCost: 4304.89, successRate: 1.0, potentialRate: 0.050 },
+        'liner5_1_2': { days: 4.500, dailyCost: 3504.67, successRate: 0.93, potentialRate: 0.090 },
+        'liner6_5_8': { days: 4.500, dailyCost: 4071.33, successRate: 0.92, potentialRate: 0.150 },
+        'casing': { days: 5.000, dailyCost: 1875.00, successRate: 1.0, potentialRate: 0.010 },
+        'dc': { days: 2.000, dailyCost: 1379.39, successRate: 1.0, potentialRate: 0.000 },
+        'bullplug': { days: 3.000, dailyCost: 1945.33, successRate: 0.85, potentialRate: 0.000 },
+        'cone': { days: 5.000, dailyCost: 1321.40, successRate: 0.90, potentialRate: 0.000 },
+        'sandBailer': { days: 3.000, dailyCost: 1007.22, successRate: 1.0, potentialRate: 0.000 },
+        'sinkerBar': { days: 3.000, dailyCost: 1330.67, successRate: 1.0, potentialRate: 0.000 },
+        'junks': { days: 2.700, dailyCost: 1118.89, successRate: 0.75, potentialRate: 0.030 }
+    };
+    return fishTypeData[fishType] || { days: 3.0, dailyCost: 1500.00, successRate: 0.80 };
+}
+
+        function calculateNewNumerator() {
+            // Get all required inputs
+            const bopd = getBOPD();
+            const oilPrice = getOilPrice();
+            const cycleTimeEstimate = getTotalTimeEstimate();
+            const previousJobCost = getPreviousJobCost();
+            const isFirstEntry = document.getElementById('firstEntry').value === 'yes';
+
+            // Get field-specific data
+            const fieldNameSelect = document.getElementById('fieldName');
+            const selectedField = fieldNameSelect.options[fieldNameSelect.selectedIndex];
+            const annualDeclineRate = parseFloat(selectedField.getAttribute('data-decline-rate'));
+            const monthlyDeclineRate = annualDeclineRate / 12; // Convert annual to monthly decline rate
+            const liftingCost = parseFloat(selectedField.getAttribute('data-lifting-cost'));
+
+            // Calculate total fishing cost (current fishing cost + previous job cost)
+            const currentFishingCost = getTotalCostEstimate();
+            const totalFishingCost = currentFishingCost + previousJobCost;
+
+            // Calculate monthly production with decline - MONTH 0 SHOULD BE 0
+            const monthlyProduction = [0]; // Month 0 is always 0
+            let currentProduction = bopd;
+
+            for (let month = 1; month <= 12; month++) {
+                // Apply monthly decline rate starting from month 1
+                currentProduction = currentProduction * (1 - monthlyDeclineRate);
+                monthlyProduction.push(currentProduction);
+            }
+
+            // Define days per month (corrected)
+            const daysPerMonth = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+            // Calculate monthly revenue (Y * crude oil price) - MONTH 0 SHOULD BE 0
+            const monthlyRevenue = [0]; // Month 0 is always 0
+            for (let month = 1; month <= 12; month++) {
+                const monthlyBarrels = monthlyProduction[month] * daysPerMonth[month];
+                if (month === 1) {
+                    // First month uses (oil price - lifting cost)
+                    monthlyRevenue.push(monthlyBarrels * (oilPrice - liftingCost));
+                } else {
+                    // Other months use full oil price
+                    monthlyRevenue.push(monthlyBarrels * oilPrice);
+                }
+            }
+
+            // Calculate cash flow (CUMULATIVE)
+            const cashFlow = [];
+            
+            // MONTH 0: - (fishing plan cost OR fishing potential cost depending on first entry)
+            if (isFirstEntry) {
+                // For First Entry: Use fishing potential cost (adjusted cost)
+                const fishingProbabilityValue = calculateFishingProbability();
+                const probabilityValue = fishingProbabilityValue / 100;
+                const fishingPotentialCost = currentFishingCost * probabilityValue;
+                cashFlow.push(-fishingPotentialCost);
+            } else {
+                // For NOT First Entry: Use fishing plan cost (total fishing cost)
+                cashFlow.push(-totalFishingCost);
+            }
+
+            // Subsequent months: previous cash flow + current month revenue (CUMULATIVE)
+            for (let month = 1; month <= 12; month++) {
+                cashFlow.push(cashFlow[month - 1] + monthlyRevenue[month]);
+            }
+
+            // Final numerator: 12th month cash flow multiplied by decline rate
+            const numerator = cashFlow[12] * annualDeclineRate;
+
+            console.log("Monthly Production:", monthlyProduction);
+            console.log("Monthly Revenue:", monthlyRevenue);
+            console.log("Cash Flow:", cashFlow);
+            console.log("Month 0 Cash Flow:", cashFlow[0]);
+            console.log("Month 12 Cash Flow:", cashFlow[12]);
+            console.log("Annual Decline Rate:", annualDeclineRate);
+            console.log("Gross Split (Numerator):", numerator);
+
+            return numerator;
+        }
+
+        function calculateEFT(timeEstimate, costEstimate) {
+            const isFirstEntry = document.getElementById('firstEntry').value === 'yes';
+            
+            // 1. Get success factor based on First Entry or Not
+            let successFactor;
+            if (isFirstEntry) {
+                // For First Entry: Use fishing potential
+                successFactor = calculateFishingProbability() / 100;
+            } else {
+                // For NOT First Entry: Use success ratio
+                successFactor = calculateFishingSuccessRate() / 100;
+            }
+
+            // 2. Calculate total fishing cost (current + previous job cost)
+            const previousJobCost = getPreviousJobCost();
+            const totalFishingCost = costEstimate + previousJobCost;
+            
+            // 3. Calculate fishing plan cost or fishing potential cost
+            let fishingCost;
+            if (isFirstEntry) {
+                // For First Entry: Fishing Potential Cost = total fishing cost × fishing potential
+                fishingCost = totalFishingCost * successFactor;
+            } else {
+                // For NOT First Entry: Fishing Plan Cost = total fishing cost
+                fishingCost = totalFishingCost;
+            }
+
+            // 4. Get the Gross Split numerator from cash flow calculation
+            const grossSplitNumerator = calculateNewNumerator();
+
+            // 5. Final EFT calculation using Gross Split Scheme formula
+            // EFT = Gross Split Numerator / Fishing Cost (Plan or Potential)
+            const eft = grossSplitNumerator / fishingCost;
+
+            console.log('EFT Calculation Debug (Gross Split Scheme):');
+            console.log(`- Success Factor: ${successFactor} (${isFirstEntry ? 'Fishing Potential' : 'Success Ratio'})`);
+            console.log(`- Total Fishing Cost: $${totalFishingCost}`);
+            console.log(`- Fishing Cost (${isFirstEntry ? 'Potential' : 'Plan'}): $${fishingCost}`);
+            console.log(`- Gross Split Numerator: $${grossSplitNumerator}`);
+            console.log(`- Final EFT: ${eft} days`);
+
+            return eft;
+        }
+
+        // Fishing tool recommendation logic
+        function recommendFishingTools() {
+            const fishEntries = document.querySelectorAll('.fish-entry');
+            if (fishEntries.length === 0) return;
+
+            const bhaContainer = document.getElementById('bhaRecommendation');
+            const notesContainer = document.getElementById('toolRecommendationNotes');
+            bhaContainer.innerHTML = '';
+            notesContainer.innerHTML = '';
+            notesContainer.classList.add('hidden');
+
+            let recommendations = [];
+            let notes = [];
+
+            // Get well conditions
+            const casingCondition = document.getElementById('casingPartedCollapse').value;
+            const fishingType = document.getElementById('fishingType').value;
+            const tofCondition = document.getElementById('tofCondition').value;
+            const casingDamage = document.getElementById('casingDamage').value;
+
+            // Analyze each fish entry
+            fishEntries.forEach(entry => {
+                const fishType = entry.querySelector('.fish-type').value;
+
+                // Recommend tools based on fish type and conditions
+                switch (fishType) {
+                    case 'mechPacker10_3_4':
+                    case 'mechPacker9_5_8':
+                    case 'mechPacker7':
+                    case 'cpa9_5_8':
+                    case 'cpa7':
+                    case 'tubingHanger':
+                    case 'espTubing':
+                    case 'tubular':
+                    case 'tubularCemented':
+                    case 'liner4':
+                    case 'liner5_1_2':
+                    case 'liner6_5_8':
+                    case 'casing':
+                        if (casingCondition === '0' || casingDamage === '0') {
+                            recommendations.push('tapertap');
+                            notes.push('Severely damaged fish or casing requires taper tap');
+                        } else if (tofCondition === '0.8') {
+                            recommendations.push('boxtap');
+                            notes.push('Fish with damaged tops require box tap');
+                        } else {
+                            recommendations.push('overshot');
+                            recommendations.push('spear');
+                        }
+                        break;
+
+                    case 'pump':
+                    case 'cibp':
+                    case 'drillingBHA':
+                    case 'loggingTool':
+                    case 'dc':
+                        recommendations.push('spear');
+                        recommendations.push('boxtap');
+                        notes.push('Internal fishing tools recommended for these components');
+                        break;
+
+                    case 'bullplug':
+                    case 'cone':
+                    case 'sandBailer':
+                    case 'sinkerBar':
+                    case 'junks':
+                        recommendations.push('tapertap');
+                        recommendations.push('boxtap');
+                        notes.push('Junk fishing tools recommended for these items');
+                        break;
+                }
+            });
+
+            // Remove duplicates
+            recommendations = [...new Set(recommendations)];
+            notes = [...new Set(notes)];
+
+            // Define tool data
+            const toolData = {
+                'overshot': {
+                    name: 'Overshot',
+                    description: 'Best for tubular fish with clean outer surfaces',
+                    image: 'https://raw.githubusercontent.com/fadelgifari/focus/main/Images/Overshot.png',
+                    conditions: ['Clean fish exterior', 'Undamaged casing', 'Good TOF condition']
+                },
+                'spear': {
+                    name: 'Spear',
+                    description: 'Ideal for internal fishing of pipes and packers',
+                    image: 'https://raw.githubusercontent.com/fadelgifari/focus/main/Images/Spear.png',
+                    conditions: ['Internal fishing', 'Accessible fish bore']
+                },
+                'boxtap': {
+                    name: 'Box Tap',
+                    description: 'Used for damaged or irregular top fish profiles',
+                    image: 'https://raw.githubusercontent.com/fadelgifari/focus/main/Images/Box%20taps.png',
+                    conditions: ['Damaged fish top', 'Condition 2 or 3 TOF']
+                },
+                'tapertap': {
+                    name: 'Taper Tap',
+                    description: 'For severely damaged fish tops or junk',
+                    image: 'https://raw.githubusercontent.com/fadelgifari/focus/main/Images/Taper%20tap.png',
+                    conditions: ['Severe damage', 'Junk fishing', 'Casing issues']
+                }
+            };
+
+            // Display recommendations
+            if (recommendations.length === 0) {
+                bhaContainer.innerHTML = '<p class="text-gray-500">No specific recommendations based on current parameters</p>';
+                return;
+            }
+
+            // Show recommended tools with images
+            recommendations.forEach(toolKey => {
+                const tool = toolData[toolKey];
+                const toolDiv = document.createElement('div');
+                toolDiv.className = 'text-center p-4 border rounded-lg bg-blue-50 tool-highlight';
+                toolDiv.innerHTML = `
+                                <div class="h-24 flex items-center justify-center mb-2">
+                                    <img src="${tool.image}" alt="${tool.name}" class="max-h-full max-w-full object-contain">
+                                </div>
+                                <h4 class="font-medium">${tool.name}</h4>
+                                <p class="text-sm text-gray-600">${tool.description}</p>
+                                <div class="mt-2 text-xs text-gray-500">
+                                    <p class="font-semibold">Recommended when:</p>
+                                    <ul class="list-disc list-inside text-left">
+                                        ${tool.conditions.map(c => `<li>${c}</li>`).join('')}
+                                    </ul>
+                                </div>
+                            `;
+                bhaContainer.appendChild(toolDiv);
+            });
+
+            // Show notes if any
+            if (notes.length > 0) {
+                notesContainer.innerHTML = `
+                                <h4 class="font-semibold mb-2">Recommendation Notes:</h4>
+                                <ul class="list-disc list-inside pl-4">
+                                    ${notes.map(n => `<li>${n}</li>`).join('')}
+                                </ul>
+                            `;
+                notesContainer.classList.remove('hidden');
+            }
+        }
+
+        function toggleWellGeometryFields() {
+            const isFirstEntry = document.getElementById('firstEntry').value === 'yes';
+            const firstEntryGeometry = document.getElementById('wellGeometry').closest('.mb-4');
+            const notFirstEntryGeometry = document.getElementById('wellGeometrySuccess').closest('.mb-4');
+
+            if (isFirstEntry) {
+                firstEntryGeometry.classList.remove('hidden');
+                notFirstEntryGeometry.classList.add('hidden');
+            } else {
+                firstEntryGeometry.classList.add('hidden');
+                notFirstEntryGeometry.classList.remove('hidden');
+            }
+        }
+
+        function updateEconomicAnalysis(totalTimeEstimate, totalCostEstimate, fishingProbabilityValue) {
+            const wellName = document.getElementById('wellName').value || 'Unnamed Well';
+            document.getElementById('wellNameResult').textContent = wellName;
+
+            const isFirstEntry = document.getElementById('firstEntry').value === 'yes';
+            const casingPartedCollapse = parseFloat(document.getElementById('casingPartedCollapse').value) || 1;
+            const casingDamage = parseFloat(document.getElementById('casingDamage').value) || 1;
+
+            // Check if fishing is impossible (either casing condition is 0)
+            const fishingImpossible = casingPartedCollapse === 0 || casingDamage === 0;
+            
+            // For First Entry, use the calculated fishing probability directly
+            let adjustedFishingProbability = parseFloat(fishingProbabilityValue);
+
+            if (fishingImpossible && !isFirstEntry) {
+                // Set all relevant fields to show 0% success for NON-FIRST ENTRY
+                document.getElementById('successPrediction').textContent = "0.00%";
+                document.getElementById('successRate').textContent = "0.00%";
+
+                // Show NO GO recommendation immediately
+                const costVsEftContainer = document.getElementById('costVsEftContainer');
+                const costVsEftContainerFirst = document.getElementById('costVsEftContainerFirst');
+                costVsEftContainer.className = "p-4 border rounded-lg no-go";
+                costVsEftContainerFirst.className = "p-4 border rounded-lg no-go";
+                document.getElementById('costVsEft').textContent = "NO GO - FISHING IMPOSSIBLE";
+                document.getElementById('costVsEftFirst').textContent = "NO GO - FISHING IMPOSSIBLE";
+                return; // Skip all other calculations
+            }
+
+            if (isFirstEntry) {
+                // First Entry display - Use adjusted fishing probability
+                document.getElementById('successRate').textContent = adjustedFishingProbability.toFixed(2) + '%';
+
+                const probabilityValue = adjustedFishingProbability / 100;
+                const adjustedCost = totalCostEstimate * probabilityValue;
+                const adjustedCycleTime = totalTimeEstimate * probabilityValue;
+
+                document.getElementById('estimatedCost').textContent = `$${adjustedCost.toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
+                document.getElementById('cycleTime').textContent = `${adjustedCycleTime.toFixed(1)} days`;
+                
+                // Calculate EFT for First Entry scenario
+                const bopd = parseFloat(document.getElementById('oilProductionFirst').value) || 0;
+                const oilPrice = parseFloat(document.getElementById('oilPriceFirst').value) || 0;
+                
+                // Only show EFT and recommendation if BOPD and Oil Price are provided
+                if (bopd > 0 && oilPrice > 0) {
+                    const eft = calculateEFT(totalTimeEstimate, totalCostEstimate);
+                    document.getElementById('economicFishingTimeFirst').textContent = `${eft.toFixed(1)} days`;
+                    
+                    const costVsEftContainer = document.getElementById('costVsEftContainerFirst');
+                    const costVsEftElement = document.getElementById('costVsEftFirst');
+                    
+                    // SPECIAL CASE FOR FIRST ENTRY: If user selects "Both tools & fish can pass" OR "Neither tools nor fish can pass"
+                    // for EITHER Casing Parted/Collapse OR Casing Damage, then it's automatically NO GO
+                    const casingPartedValue = document.getElementById('casingPartedCollapse').value;
+                    const casingDamageValue = document.getElementById('casingDamage').value;
+                    
+                    const problematicCasingOptions = ['0.2', '0.57', '0']; // Values for "Both tools & fish can pass" and "Neither tools nor fish can pass"
+                    
+                    if (problematicCasingOptions.includes(casingPartedValue) || problematicCasingOptions.includes(casingDamageValue)) {
+                        // Automatic NO GO for these casing conditions
+                        costVsEftContainer.className = "p-4 border rounded-lg no-go";
+                        costVsEftElement.textContent = "NO GO";
+                        costVsEftElement.title = "Automatic NO GO when 'Both tools & fish can pass' or 'Neither tools nor fish can pass' is selected for casing conditions";
+                    } else {
+                        // Normal EFT-based decision for good casing conditions
+                        if (adjustedCycleTime < eft) {
+                            costVsEftContainer.className = "p-4 border rounded-lg good-to-go";
+                            costVsEftElement.textContent = "GOOD TO GO";
+                            costVsEftElement.title = `Planned Time: ${adjustedCycleTime.toFixed(1)} days < EFT: ${eft.toFixed(1)} days`;
+                        } else {
+                            costVsEftContainer.className = "p-4 border rounded-lg no-go";
+                            costVsEftElement.textContent = "NO GO";
+                            costVsEftElement.title = `Planned Time: ${adjustedCycleTime.toFixed(1)} days ≥ EFT: ${eft.toFixed(1)} days`;
+                        }
+                    }
+                }
+            } else {
+                // Actual Fishing display (NOT First Entry) - keep existing logic
+                const fishingSuccessRate = parseFloat(calculateFishingSuccessRate());
+                const eft = calculateEFT(totalTimeEstimate, totalCostEstimate);
+                const previousJobCost = getPreviousJobCost();
+
+                document.getElementById('successPrediction').textContent = fishingSuccessRate.toFixed(2) + '%';
+                document.getElementById('fishingCostEstimate').textContent = `$${totalCostEstimate.toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
+                document.getElementById('previousJobCostResult').textContent = `$${previousJobCost.toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
+                document.getElementById('fishingCycleTime').textContent = `${totalTimeEstimate.toFixed(1)} days`;
+                document.getElementById('economicFishingTime').textContent = `${eft.toFixed(1)} days`;
+
+                const costVsEftContainer = document.getElementById('costVsEftContainer');
+                const costVsEftElement = document.getElementById('costVsEft');
+
+                // For NOT First Entry: Check both conditions:
+                // 1. Success rate must be >= 53.4%
+                // 2. Planned fishing time must be < EFT
+                const isGoodToGo = fishingSuccessRate >= 53.4 && totalTimeEstimate < eft;
+
+                if (isGoodToGo) {
+                    costVsEftContainer.className = "p-4 border rounded-lg good-to-go";
+                    costVsEftElement.textContent = "GOOD TO GO";
+                    costVsEftElement.title = `Success Rate: ${fishingSuccessRate.toFixed(2)}% (≥53.4%) and Planned Time: ${totalTimeEstimate.toFixed(1)} days < EFT: ${eft.toFixed(1)} days`;
+                } else {
+                    costVsEftContainer.className = "p-4 border rounded-lg no-go";
+                    costVsEftElement.textContent = "NO GO";
+
+                    let reason = "";
+                    if (fishingSuccessRate < 53.4 && totalTimeEstimate >= eft) {
+                        reason = `Success Rate: ${fishingSuccessRate.toFixed(2)}% (<53.4%) and Planned Time: ${totalTimeEstimate.toFixed(1)} days ≥ EFT: ${eft.toFixed(1)} days`;
+                    } else if (fishingSuccessRate < 53.4) {
+                        reason = `Success Rate: ${fishingSuccessRate.toFixed(2)}% (<53.4%)`;
+                    } else {
+                        reason = `Planned Time: ${totalTimeEstimate.toFixed(1)} days ≥ EFT: ${eft.toFixed(1)} days`;
+                    }
+                    costVsEftElement.title = reason;
+                }
+            }
+        }
+
+        function toggleFishingDisplay() {
+            const isFirstEntry = document.getElementById('firstEntry').value === 'yes';
+            const firstEntryFields = document.getElementById('firstEntryFields');
+            const actualFishingFields = document.getElementById('actualFishingFields');
+            const fishingTitle = document.getElementById('fishingTitle');
+
+            if (isFirstEntry) {
+                firstEntryFields.classList.remove('hidden');
+                actualFishingFields.classList.add('hidden');
+                fishingTitle.textContent = "Potential Fishing";
+            } else {
+                firstEntryFields.classList.add('hidden');
+                actualFishingFields.classList.remove('hidden');
+                fishingTitle.textContent = "Planned Fishing";
+            }
+        }
+
+        // Login/Logout functionality
+        const loginForm = document.getElementById('loginForm');
+        const loginPage = document.getElementById('loginPage');
+        const appContent = document.getElementById('appContent');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const loginError = document.getElementById('loginError');
+
+        // Predefined credentials (for demo only)
+        const validCredentials = {
+            username: "nasir.nathan@pertamina.com",
+            password: "prototype726"
+        };
+
+        loginForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username === validCredentials.username && password === validCredentials.password) {
+                // Successful login
+                loginPage.classList.add('hidden');
+                appContent.classList.remove('hidden');
+                loginError.classList.add('hidden');
+
+                // Initialize app
+                addFishEntry();
+                toggleFishingDisplay();
+                toggleFirstEntryEconomicFields();
+
+                // Save login state in sessionStorage
+                sessionStorage.setItem('isLoggedIn', 'true');
+            }
+        });
+
+        logoutBtn.addEventListener('click', function () {
+            sessionStorage.removeItem('isLoggedIn');
+            loginPage.classList.remove('hidden');
+            appContent.classList.add('hidden');
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            loginError.classList.add('hidden');
+        });
+
+        // Check if user is already logged in
+        if (sessionStorage.getItem('isLoggedIn') === 'true') {
+            loginPage.classList.add('hidden');
+            appContent.classList.remove('hidden');
+            addFishEntry();
+            toggleFishingDisplay();
+            toggleFirstEntryEconomicFields();
+        }
+
+        // Add validation for firstEntry field
+        document.getElementById('firstEntry').addEventListener('invalid', function () {
+            this.classList.add('border-red-500');
+        });
+
+        // Remove red border when user makes a selection
+        document.getElementById('firstEntry').addEventListener('change', function () {
+            if (this.value) {
+                this.classList.remove('border-red-500');
+            }
+            toggleFishingDisplay();
+            toggleWellGeometryFields();
+            toggleNonFirstEntryFields();
+            toggleFirstEntryEconomicFields();
+            updateEconomicAnalysis(
+                getTotalTimeEstimate(),
+                getTotalCostEstimate(),
+                calculateFishingProbability()
+            );
+        });
+
+        // Initialize with default values if logged in
+        document.addEventListener('DOMContentLoaded', function () {
+            // Add event listeners to all inputs that should trigger recalculations
+            const inputsToWatch = [
+                'casingPartedCollapse', 'casingDamage', 'fishingType',
+                'wellGeometrySuccess', 'tofCondition', 'fishDetailCondition',
+                'fieldName', 'oilProduction', 'oilPrice', 'previousJobCost',
+                'oilProductionFirst', 'oilPriceFirst'
+            ];
+
+            inputsToWatch.forEach(id => {
+                document.getElementById(id).addEventListener('change', function () {
+                    updateEconomicAnalysis(
+                        getTotalTimeEstimate(),
+                        getTotalCostEstimate(),
+                        calculateFishingProbability()
+                    );
+                    recommendFishingTools();
+                });
+            });
+        });
+    </script>
+    
 </html>
